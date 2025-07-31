@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cyber Inferno Auth Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0D0D0D;
+      color: #FF4EC3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: radial-gradient(#FF3131 1px, transparent 1px),
+                        radial-gradient(#FFA41B 1px, transparent 1px);
+      background-size: 60px 60px;
+      background-position: 0 0, 30px 30px;
+    }
+
+    .container {
+      background-color: #111;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px #FF3131;
+      width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #FFA41B;
+      text-shadow: 0 0 10px #FF4EC3;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+      background-color: #222;
+      color: #FFA41B;
+      box-shadow: inset 0 0 10px #FF4EC3;
+    }
+
+    button {
+      background-color: #FF3131;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+      box-shadow: 0 0 15px #FF3131;
+      transition: 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #FFA41B;
+      box-shadow: 0 0 20px #FFA41B;
+    }
+
+    .toggle {
+      color: #999;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .toggle:hover {
+      color: #FF4EC3;
+      text-shadow: 0 0 5px #FF4EC3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #dashboard p {
+      text-align: left;
+      color: #FFA41B;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="auth-container">
+    <h2 id="form-title">Login</h2>
+
+    <div id="login-form">
+      <input type="text" placeholder="Username" id="login-username">
+      <input type="password" placeholder="Password" id="login-password">
+      <button onclick="login()">Login</button>
+    </div>
+
+    <div id="register-form" class="hidden">
+      <input type="text" placeholder="Username" id="register-username">
+      <input type="password" placeholder="Password" id="register-password">
+      <button onclick="register()">Register</button>
+    </div>
+
+    <div class="toggle" onclick="toggleForm()">Don't have an account? Register</div>
+  </div>
+
+  <div class="container hidden" id="dashboard">
+    <h2>Welcome to Vardhaman College Dashboard</h2>
+    <p><strong>About:</strong> Vardhaman College of Engineering, Hyderabad is a premier engineering institution offering world-class education and cutting-edge research. Affiliated with JNTUH, it has been accredited by NAAC with an 'A++' grade.</p>
+    <p><strong>Courses Offered:</strong> B.Tech, M.Tech, MBA in disciplines such as CSE, ECE, ME, IT, Civil, AI & DS, and more.</p>
+    <p><strong>Student Strength:</strong> Over 5000 students enrolled across various programs.</p>
+    <p><a href="https://vardhaman.org" target="_blank" style="color:#FF4EC3;">Visit Official Website</a></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="container hidden" id="logout-screen">
+    <h2>Thanks for logging out!</h2>
+    <p>This page was done by:</p>
+    <p>SIDDHA SANKALP (23881A05J7)</p>
+    <p>LAKSH DHAMIJA (23881A05F9)</p>
+    <p>PRERAN KUMAR (23881A05E7)</p>
+    <p>NANDA KISHORE (23881A05J8)</p>
+  </div>
+
+  <script>
+    let isLogin = true;
+
+    function toggleForm() {
+      isLogin = !isLogin;
+      document.getElementById('login-form').classList.toggle('hidden');
+      document.getElementById('register-form').classList.toggle('hidden');
+      document.getElementById('form-title').innerText = isLogin ? 'Login' : 'Register';
+      document.querySelector('.toggle').innerText = isLogin ? "Don't have an account? Register" : "Already have an account? Login";
+    }
+
+    function login() {
+      const user = document.getElementById('login-username').value;
+      const pass = document.getElementById('login-password').value;
+
+      if (user === localStorage.getItem('user') && pass === localStorage.getItem('pass')) {
+        document.getElementById('auth-container').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+      } else {
+        alert("Invalid username or password.");
+      }
+    }
+
+    function register() {
+      const user = document.getElementById('register-username').value;
+      const pass = document.getElementById('register-password').value;
+
+      if (user && pass) {
+        localStorage.setItem('user', user);
+        localStorage.setItem('pass', pass);
+        alert("Registered successfully. You can now login.");
+        toggleForm();
+      } else {
+        alert("Please fill in both fields.");
+      }
+    }
+
+    function logout() {
+      document.getElementById('dashboard').classList.add('hidden');
+      document.getElementById('logout-screen').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
